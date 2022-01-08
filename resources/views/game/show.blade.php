@@ -50,3 +50,48 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        const circleElement = document.getElementById('circle');
+        const timerElement = document.getElementById('timer');
+        const winnerElement = document.getElementById('winner');
+        const betElement = document.getElementById('bet');
+        const resultElement = document.getElementById('result');
+
+
+        Echo.channel('game')
+        .listen('RemainingTimeChanged', (e) => {
+            timerElement.innerText = e.time;
+
+            circleElement.classList.add('refresh');
+
+            winnerElement.classList.add('d-none');
+
+            resultElement.innerText = '';
+
+            winnerElement.classList.remove('text-sucess');
+            winnerElement.classList.remove('text-danger');
+
+        })
+        .listen('WinnerNumberGenerated', (e) => {
+            circleElement.classList.remove('refresh');
+
+            let winner = e.number;
+
+            winnerElement.innerText = winner;
+            winnerElement.classList.remove('d-none');
+
+            let bet = betElement[betElement.selectedIndex].innerText;
+
+            if(bet === winner){
+                resultElement.innerText = 'YOU WIN';
+                winnerElement.classList.add('text-sucess');
+            }else{
+                resultElement.innerText = 'YOU LOSE';
+                winnerElement.classList.add('text-danger');
+            }
+
+        });
+    </script>
+@endpush
