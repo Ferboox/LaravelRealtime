@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Log;
 use App\Models\User;
 
 
-class UserCreated implements ShouldBroadcast
+class UserDeleted implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable, InteractsWithSockets;
 
     public $user;
 
@@ -38,7 +38,7 @@ class UserCreated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        Log::debug("User created {$this->user->name}");
+        Log::debug("User deleted {$this->user->name}");
         return new Channel('users');
     }
 }

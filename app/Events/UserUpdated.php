@@ -11,10 +11,10 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
-use App\User;
+use App\Models\User;
 
 
-class UserDeleated implements ShouldBroadcast
+class UserUpdated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -38,6 +38,7 @@ class UserDeleated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
+        Log::debug("User updated {$this->user->name}");
         return new Channel('users');
     }
 }
