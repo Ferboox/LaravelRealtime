@@ -57,7 +57,7 @@
         })
         .listen('UserDeleted', (e) =>{
             let element = document.getElementById(e.user.id);
-            element.parentNode.remove(element);
+            element.parentNode.removeChild(element);
         })
     </script>
 @endpush

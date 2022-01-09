@@ -57,6 +57,30 @@
 
 @push('scripts')
     <script>
-        
+        const usersElement = document.getElementById('users');
+
+        Echo.join('chat')
+        .here((users) => {
+            users.forEach((user,index) => {
+                let element = document.createElement('li');
+
+                element.setAttribute('id', user.id);
+                element.innerText = user.name;
+
+                usersElement.appendChild(element);
+            });
+        })
+        .joining((user) => {
+            let element = document.createElement('li');
+
+            element.setAttribute('id', user.id);
+            element.innerText = user.name;
+
+            usersElement.appendChild(element);
+        })
+        .leaving((user) => {
+            let element = document.getElementById(user.id);
+            element.parentNode.removeChild(element);
+        })
     </script>
 @endpush
